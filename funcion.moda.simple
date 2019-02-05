@@ -1,0 +1,48 @@
+# Función sencilla para calcular la moda
+
+# Pasos para la construcción de la función:
+# 1. El objeto "u" guarda los elementos únicos del vector, los cuales se registran según su orden de aparición
+# 2. El objeto "m" registra las frecuencias de cada elemento único en el vector utilizando las funciones table y match
+# 3. El objeto "moda" corresponde al subconjunto de u que cumple la condición de ser el máximo dentro de m 
+# 4. El objeto "valor" registra la frecuencia del elemento con mayor valor (máximo)
+# Se establece un argumento por default para que se despliegue únicamente el vector de números más frecuentes
+# Si all= TRUE, la función regresa una lista con la moda y la frecuencia (si hay más de una moda, la frecuencia es igual)
+# Nota: La función puede optimizarse para que registre la frecuencia de NA añadiendo un argumento adicional que se incorpore dentro del llamado a table 
+
+moda_calc <- function(x, all=FALSE) {
+	  u <- unique(x)
+	  m <-table(match(x,u))
+	  moda <- u[m==max(m)]
+	  valor <- max(table(x))
+	  if (all==TRUE) return(list(Moda=moda, Frecuencia=valor))
+	  moda
+  }
+
+a <- data.frame(v1=c(1,1,1,3,3,4), v2=c("a","a","b","b","b","c"))
+
+# Utilizando la función con el argumento por default
+lapply(a, moda_calc)
+$v1
+[1] 1
+
+$v2
+[1] b
+Levels: a b c
+
+
+# Utilizando la función con all=TRUE
+lapply(a, function(x) moda_calc(x, TRUE))
+$v1
+$v1$Moda
+[1] 1
+
+$v1$Frecuencia
+[1] 3
+
+$v2
+$v2$Moda
+[1] b
+Levels: a b c
+
+$v2$Frecuencia
+[1] 3
